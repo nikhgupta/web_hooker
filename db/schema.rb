@@ -11,13 +11,70 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151112193730) do
+ActiveRecord::Schema.define(version: 20151112211612) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "destinations", force: :cascade do |t|
+    t.integer  "portal_id"
+    t.string   "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "destinations", ["portal_id"], name: "index_destinations_on_portal_id", using: :btree
+
+  create_table "portals", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "slug"
+    t.integer  "submissions_count",  default: 0
+    t.integer  "destinations_count", default: 0
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "portals", ["slug"], name: "index_portals_on_slug", unique: true, using: :btree
+  add_index "portals", ["user_id"], name: "index_portals_on_user_id", using: :btree
+
+  create_table "replies", force: :cascade do |t|
+    t.integer  "destination_id"
+    t.integer  "submission_id"
+    t.integer  "http_status_code"
+    t.integer  "content_length"
+    t.string   "content_type"
+    t.text     "headers"
+    t.text     "body"
+    t.datetime "processed_at"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "replies", ["destination_id"], name: "index_replies_on_destination_id", using: :btree
+  add_index "replies", ["submission_id"], name: "index_replies_on_submission_id", using: :btree
+
+  create_table "submissions", force: :cascade do |t|
+    t.integer  "portal_id"
+    t.string   "host"
+    t.string   "ip"
+    t.string   "uuid"
+    t.string   "request_method"
+    t.string   "content_type"
+    t.integer  "content_length"
+    t.text     "headers"
+    t.text     "body"
+    t.integer  "failed_replies_count",     default: 0
+    t.integer  "successful_replies_count", default: 0
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+  end
+
+  add_index "submissions", ["portal_id"], name: "index_submissions_on_portal_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.boolean  "admin",                  default: false
+    t.integer  "portals_count",          default: 0
     t.string   "email",                  default: "",    null: false
     t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
@@ -40,4 +97,9 @@ ActiveRecord::Schema.define(version: 20151112193730) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "destinations", "portals"
+  add_foreign_key "portals", "users"
+  add_foreign_key "replies", "destinations"
+  add_foreign_key "replies", "submissions"
+  add_foreign_key "submissions", "portals"
 end

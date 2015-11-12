@@ -1,0 +1,47 @@
+<div class="page-header">
+  <%= link_to submissions_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_submission_path(@submission), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show submission</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Portal:</dt>
+  <dd><%= @submission.portal %></dd>
+
+  <dt>Host:</dt>
+  <dd><%= @submission.host %></dd>
+
+  <dt>Ip:</dt>
+  <dd><%= @submission.ip %></dd>
+
+  <dt>Uuid:</dt>
+  <dd><%= @submission.uuid %></dd>
+
+  <dt>Request method:</dt>
+  <dd><%= @submission.request_method %></dd>
+
+  <dt>Content type:</dt>
+  <dd><%= @submission.content_type %></dd>
+
+  <dt>Content length:</dt>
+  <dd><%= @submission.content_length %></dd>
+
+  <dt>Headers:</dt>
+  <dd><%= @submission.headers %></dd>
+
+  <dt>Body:</dt>
+  <dd><%= @submission.body %></dd>
+
+  <dt>Successful replies count:</dt>
+  <dd><%= @submission.successful_replies_count %></dd>
+
+  <dt>Failed replies count:</dt>
+  <dd><%= @submission.failed_replies_count %></dd>
+
+</dl>

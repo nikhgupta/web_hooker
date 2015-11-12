@@ -1,0 +1,38 @@
+<div class="page-header">
+  <%= link_to replies_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_reply_path(@reply), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show reply</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Destination:</dt>
+  <dd><%= @reply.destination %></dd>
+
+  <dt>Submission:</dt>
+  <dd><%= @reply.submission %></dd>
+
+  <dt>Http status code:</dt>
+  <dd><%= @reply.http_status_code %></dd>
+
+  <dt>Content length:</dt>
+  <dd><%= @reply.content_length %></dd>
+
+  <dt>Content type:</dt>
+  <dd><%= @reply.content_type %></dd>
+
+  <dt>Headers:</dt>
+  <dd><%= @reply.headers %></dd>
+
+  <dt>Body:</dt>
+  <dd><%= @reply.body %></dd>
+
+  <dt>Processed at:</dt>
+  <dd><%= @reply.processed_at %></dd>
+
+</dl>

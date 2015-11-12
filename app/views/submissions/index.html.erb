@@ -1,0 +1,49 @@
+<div class="page-header">
+  <%= link_to new_submission_path, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Submission
+  <% end %>
+  <h1>Listing submissions</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Portal</th>
+            <th>Host</th>
+            <th>Ip</th>
+            <th>Uuid</th>
+            <th>Request method</th>
+            <th>Content type</th>
+            <th>Content length</th>
+            <th>Headers</th>
+            <th>Body</th>
+            <th>Successful replies count</th>
+            <th>Failed replies count</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @submissions) do |submission| %>
+            <td><%= submission.portal %></td>
+            <td><%= submission.host %></td>
+            <td><%= submission.ip %></td>
+            <td><%= submission.uuid %></td>
+            <td><%= submission.request_method %></td>
+            <td><%= submission.content_type %></td>
+            <td><%= submission.content_length %></td>
+            <td><%= submission.headers %></td>
+            <td><%= submission.body %></td>
+            <td><%= submission.successful_replies_count %></td>
+            <td><%= submission.failed_replies_count %></td>
+            <td><%= link_to 'Show', submission %></td>
+        <td><%= link_to 'Edit', edit_submission_path(submission) %></td>
+        <td><%= link_to 'Destroy', submission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>

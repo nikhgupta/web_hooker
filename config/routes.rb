@@ -2,10 +2,18 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
 
   root to: 'high_voltage/pages#show', id: 'home'
+  match 'for/:portal' => 'submissions#process', as: :processor, via: :all
 
   devise_for :users
   authenticate :user, lambda(&:admin?) do
     mount Sidekiq::Web => '/monitor', as: :monitor
+  end
+
+  authenticate :user do
+    resources :replies
+    resources :submissions
+    resources :destinations
+    resources :portals
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
