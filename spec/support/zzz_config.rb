@@ -1,4 +1,8 @@
 RSpec.configure do |config|
+
+  config.include FactoryGirl::Syntax::Methods
+  config.include IntegrationHelpers, type: :feature
+
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
     begin
@@ -15,4 +19,5 @@ RSpec.configure do |config|
     end
   end
 end
+
 

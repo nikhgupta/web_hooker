@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Web Hooker</title>
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" media="all" href="/assets/application.css" data-turbolinks-track="true" />
+  <script src="/assets/application.js" data-turbolinks-track="true"></script>
+  
+</head>
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Web Hooker</a>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class='nav navbar-nav'>
+        <li class=""><a href="/">Home</a></li>
+        
+      </ul>
+      <ul class='nav navbar-nav navbar-right'>
+          <li class="active"><a href="/users/edit">Profile</a></li>
+          <li class=""><a rel="nofollow" data-method="delete" href="/users/sign_out">Log out</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <div class="container">
+
+    <h2>Edit User</h2>
+
+<form class="edit_user" id="edit_user" action="/users" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="_method" value="put" />
+  
+
+  <div class="field">
+    <label for="user_email">Email</label><br />
+    <input autofocus="autofocus" type="email" value="user7@example.com" name="user[email]" id="user_email" />
+  </div>
+
+
+  <div class="field">
+    <label for="user_password">Password</label> <i>(leave blank if you don't want to change it)</i><br />
+    <input autocomplete="off" type="password" name="user[password]" id="user_password" />
+  </div>
+
+  <div class="field">
+    <label for="user_password_confirmation">Password confirmation</label><br />
+    <input autocomplete="off" type="password" name="user[password_confirmation]" id="user_password_confirmation" />
+  </div>
+
+  <div class="field">
+    <label for="user_current_password">Current password</label> <i>(we need your current password to confirm your changes)</i><br />
+    <input autocomplete="off" type="password" name="user[current_password]" id="user_current_password" />
+  </div>
+
+  <div class="actions">
+    <input type="submit" name="commit" value="Update" />
+  </div>
+</form>
+<h3>Cancel my account</h3>
+
+<p>Unhappy? <form class="button_to" method="post" action="/users"><input type="hidden" name="_method" value="delete" /><input data-confirm="Are you sure?" type="submit" value="Cancel my account" /></form></p>
+
+<a href="http://www.example.com/">Back</a>
+
+  </div>
+</body>
+</html>
