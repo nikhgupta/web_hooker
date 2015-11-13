@@ -1,15 +1,18 @@
 FactoryGirl.define do
   factory :submission do
     portal
+
     host "SomeHost.com"
     ip nil
     uuid { SecureRandom.uuid }
     request_method "get"
+
     content_type nil
-    content_length nil
-    headers {}
-    body ""
+    content_length 0
     failed_replies_count 0
     successful_replies_count 0
+
+    body ""
+    headers Hash.new
   end
 end

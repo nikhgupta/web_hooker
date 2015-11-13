@@ -2,11 +2,13 @@ FactoryGirl.define do
   factory :reply do
     destination
     submission
-    http_status_code 200
-    content_length nil
+
     content_type nil
-    headers {}
+    response_time  0
+    content_length 0
+    http_status_code 200
+
     body ""
-    processed_at nil
+    headers Hash.new
   end
 end

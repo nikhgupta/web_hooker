@@ -41,14 +41,14 @@ ActiveRecord::Schema.define(version: 20151112211612) do
   create_table "replies", force: :cascade do |t|
     t.integer  "destination_id"
     t.integer  "submission_id"
-    t.integer  "http_status_code"
-    t.integer  "content_length"
     t.string   "content_type"
+    t.integer  "http_status_code"
+    t.integer  "response_time",    default: 0
+    t.integer  "content_length",   default: 0
     t.text     "headers"
     t.text     "body"
-    t.datetime "processed_at"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "replies", ["destination_id"], name: "index_replies_on_destination_id", using: :btree
@@ -61,11 +61,11 @@ ActiveRecord::Schema.define(version: 20151112211612) do
     t.string   "uuid"
     t.string   "request_method"
     t.string   "content_type"
-    t.integer  "content_length"
-    t.text     "headers"
-    t.text     "body"
+    t.integer  "content_length",           default: 0
     t.integer  "failed_replies_count",     default: 0
     t.integer  "successful_replies_count", default: 0
+    t.text     "headers"
+    t.text     "body"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
   end

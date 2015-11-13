@@ -26,7 +26,7 @@ class Submission < ActiveRecord::Base
     matched ? matched.to_sym : :partially_successful
   end
 
-  def partially_successful?
-    status == :partially_successful
-  end
+  # def partially_successful?
+  #   status == :partially_successful
+  # end
 end

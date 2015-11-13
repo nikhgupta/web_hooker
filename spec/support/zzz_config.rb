@@ -1,6 +1,8 @@
 RSpec.configure do |config|
 
+  config.include TestHelpers
   config.include FactoryGirl::Syntax::Methods
+  config.include ActiveJob::TestHelper, type: :job
   config.include IntegrationHelpers, type: :feature
 
   config.before(:suite) do

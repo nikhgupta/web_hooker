@@ -18,6 +18,13 @@ class Reply < ActiveRecord::Base
     Rack::Utils::HTTP_STATUS_CODES[http_status_code]
   end
 
+  def self.for(submission, destination)
+    find_or_initialize_by(
+      submission_id:  submission.id,
+      destination_id: destination.id
+    )
+  end
+
   private
 
   def increment_counters_on_submission
