@@ -3,6 +3,8 @@
 
   #submissionList {
     @extend .col-sm-4;
+    @include independent-scroll;
+    left: 0;
     padding: 0;
     border-right: 1px solid #efefef;
     background-color: #fcfcfc;
@@ -23,11 +25,17 @@
           margin-top: 10px;
         }
       }
+      .panel-body {
+        display: none;
+      }
     }
   }
 
   #submissionOverview {
     @extend .col-sm-8;
+    @include independent-scroll;
+    right: 0;
     padding-top: 10px;
+    background-color: #ffe0e0;
   }
 }

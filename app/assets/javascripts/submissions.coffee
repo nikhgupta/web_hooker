@@ -1,7 +1,7 @@
 jQuery ->
 
-  scrollTo = (el, topOffset = 20, leftOffset = 20) ->
-    $('html,body').animate
+  scrollTo = (el, selector = 'html,body', topOffset = 20, leftOffset = 20) ->
+    $(selector).animate
       scrollTop: $(el).offset().top - topOffset
       scrollLeft: $(el).offset().left - leftOffset
 
@@ -15,6 +15,9 @@ jQuery ->
 
   # Request overview for the submission when selected
   $(".submissionCard .panel-heading").click ->
-    $.getScript "/submissions/#{$(@).parent().data('id')}.js", =>
-      $(@).parent().find(".panel-body").slideDown => scrollTo(@, 70)
-    $(@).parents("#submissionList").find(".panel-body").not(self).slideUp()
+    # $.getScript "/submissions/#{$(@).parent().data('id')}.js", =>
+    #   $(@).parent().find(".panel-body").slideDown => scrollTo(@, 70)
+    # $(@).parents("#submissionList").find(".panel-body").not(self).slideUp()
+    $.getScript "/submissions/#{$(@).parent().data('id')}.js"
+
+  $(".submissionCard .panel-heading:first()").trigger('click')

@@ -1,6 +1,7 @@
-<% submission.replies_including_awaited.each do |reply| %>
-  <pre><code><%= reply.headers.map{|k,v| "#{k.titleize.gsub(/\s+/, '-')}: #{v}" }.join("\n") if reply.headers.present? %>
+<div class='submissionOverview' id='submissionOverview-<%= submission.id %>'>
+  <% submission.replies_including_awaited.each do |reply| %>
+    <pre><code><%= reply.headers.map{|k,v| "#{k.titleize.gsub(/\s+/, '-')}: #{v}" }.join("\n") if reply.headers.present? %>
 
-<%= reply.body %></code></pre>
-<% end %>
-
+  <%= reply.body %></code></pre>
+  <% end %>
+<div>
