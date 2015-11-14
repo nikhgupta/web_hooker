@@ -2,6 +2,7 @@
   <div class="panel-heading">
     <div class='submission-info'>
       <%= submission.portal.title_label %>
+      <span class='label label-warning'><%= submission.host || submission.ip %></span>
       <%= submission.ping_balls %>
       <%= submission.timestamp_for(:created_at) %>
     </div>
@@ -10,8 +11,6 @@
     </div>
   </div>
   <div class="panel-body">
-    <code>
-      <%= submission.headers.map{|k,v| "#{k} => #{v}"}.join("<br/>").html_safe %>
-    </code>
+    <code><%= submission.headers_list %></code>
   </div>
 </div>

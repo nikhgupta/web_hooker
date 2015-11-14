@@ -16,5 +16,5 @@ self = container.find id
 card = $("#submissionList").find(".submissionCard[data-id='<%= @submission.id %>']")
 $("#submissionList").find(".panel-body").not(card.find('.panel-body')).slideUp 'fast', =>
   card.find(".panel-body").slideDown ->
-    container.find(".submissionOverview").not(self).slideUp => self.slideDown()
+    container.find(".submissionOverview").not(self).slideUp 'slow', => self.slideDown('slow')
       # self.slideDown => $("#submissionList").animate scrollTop: card.offset().top - 70

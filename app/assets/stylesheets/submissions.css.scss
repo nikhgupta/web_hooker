@@ -9,7 +9,7 @@
     border-right: 1px solid #efefef;
     background-color: #fcfcfc;
     .panel {
-      margin-bottom: 5px;
+      margin-bottom: 10px;
       border-radius: 0;
       .panel-heading {
         border-radius: 0;
@@ -27,6 +27,8 @@
       }
       .panel-body {
         display: none;
+        background-color: #f9f2f4;
+        code { padding: 0 }
       }
     }
   }

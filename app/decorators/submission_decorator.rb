@@ -18,4 +18,12 @@ class SubmissionDecorator < ApplicationDecorator
       end
     end.flatten.join("").html_safe
   end
+
+  def headers_list
+    headers = model.headers
+    text  = []
+    text << "#{headers.delete("Version")} #{headers.delete("Host")}"
+    headers.each{ |key, val| text << "#{key}: #{val}" }
+    text.join("<br/>").html_safe
+  end
 end
