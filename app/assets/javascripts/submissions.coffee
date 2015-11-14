@@ -1,4 +1,4 @@
-jQuery ->
+ready = ->
 
   scrollTo = (el, selector = 'html,body', topOffset = 20, leftOffset = 20) ->
     $(selector).animate
@@ -21,3 +21,6 @@ jQuery ->
     $.getScript "/submissions/#{$(@).parent().data('id')}.js"
 
   $(".submissionCard .panel-heading:first()").trigger('click')
+
+$(document).ready(ready)
+$(document).on('page:load', ready)
