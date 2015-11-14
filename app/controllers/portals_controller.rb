@@ -1,5 +1,6 @@
 class PortalsController < ApplicationController
-  before_action :set_portal, only: [:show, :edit, :update, :destroy]
+  before_action :set_portal, only: [:show, :edit, :update, :destroy, :route]
+  skip_before_action :verify_authenticity_token, only: :route
 
   # GET /portals
   # GET /portals.json
@@ -61,14 +62,25 @@ class PortalsController < ApplicationController
     end
   end
 
+  def route
+    sid = request.env['HTTP_X_WEBHOOKER_SUBMISSION_ID']
+    @portal.submissions.find(sid).destination_ids.each do |did|
+      RequestForwardingJob.perform_later(sid, did)
+    end
+
+    head :accepted
+  rescue ActiveRecord::RecordNotFound => e
+    head :not_found
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_portal
-      @portal = Portal.find(params[:id])
+      @portal = Portal.find_by(slug: params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def portal_params
-      params.require(:portal).permit(:title, :slug, :destinations_count)
+      params.require(:portal).permit(:title, :user_id, :destinations_count)
     end
 end

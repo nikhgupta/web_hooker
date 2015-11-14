@@ -24,11 +24,11 @@ RSpec.describe PortalsController, type: :controller do
   # Portal. As you add validations to Portal, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    build(:portal).attributes
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    build(:portal).attributes.merge("title" => "   ")
   }
 
   # This should return the minimal set of values that should be in the session
@@ -103,14 +103,14 @@ RSpec.describe PortalsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        build(:portal).attributes.merge("title" => "New Title")
       }
 
       it "updates the requested portal" do
         portal = Portal.create! valid_attributes
         put :update, {:id => portal.to_param, :portal => new_attributes}, valid_session
         portal.reload
-        skip("Add assertions for updated state")
+        expect(portal.title).to eq "New Title"
       end
 
       it "assigns the requested portal as @portal" do
@@ -156,4 +156,50 @@ RSpec.describe PortalsController, type: :controller do
     end
   end
 
+  describe "ALL #route" do
+    it "assigns the requested portal to @portal" do
+      portal = Portal.create! valid_attributes
+      get :route, {:id => portal.to_param}, valid_session
+      expect(assigns(:portal)).to eq portal
+    end
+
+    it "responds to all primary http methods" do
+      portal = Portal.create! valid_attributes
+      submission = create :submission, portal: portal
+      allow(request.env).to receive(:[]).and_call_original
+      allow(request.env).to receive(:[]).with('HTTP_X_WEBHOOKER_SUBMISSION_ID').and_return submission.id
+      request.class.const_get("HTTP_METHODS").select do |method|
+        respond_to?(method.underscore)
+      end.each do |method|
+        send method.underscore, :route, {:id => portal.to_param}, valid_session
+        expect(response).to be_accepted
+      end
+    end
+
+    it "enqueues forwarding of current request to all destinations" do
+      portal = Portal.create! valid_attributes
+      submission  = create :submission, portal: portal, with_destinations: 3
+
+      allow(request.env).to receive(:[]).and_call_original
+      allow(request.env).to receive(:[]).with('HTTP_X_WEBHOOKER_SUBMISSION_ID').and_return submission.id
+      expect(RequestForwardingJob).to receive(:perform_later).with(submission.id, Fixnum).thrice
+
+      get :route, {:id => portal.to_param}, valid_session
+    end
+
+    it "responds with 404 Not Found without content if a submission was not created" do
+      portal = Portal.create! valid_attributes
+      get :route, {:id => portal.to_param}, valid_session
+      expect(response).to be_not_found
+    end
+
+    it "responds with 404 Not Found without content if no submission was found for this portal" do
+      portal = Portal.create! valid_attributes
+      submission  = create :submission
+      allow(request.env).to receive(:[]).and_call_original
+      allow(request.env).to receive(:[]).with('HTTP_X_WEBHOOKER_SUBMISSION_ID').and_return submission.id
+      get :route, {:id => portal.to_param}, valid_session
+      expect(response).to be_not_found
+    end
+  end
 end

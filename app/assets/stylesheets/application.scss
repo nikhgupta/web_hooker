@@ -1,0 +1,62 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require fontawesome
+ *= require_self
+ */
+
+@import 'bootstrap-generators';
+@import 'mixins';
+@import 'submissions';
+@import 'replies';
+
+body, html {
+  margin: 0;
+  overflow: hidden;
+  height:100%;
+}
+
+body {
+  padding-top: 50px;
+  font-family: 'Open Sans', sans-serif;
+  span.timestamp {
+    color: #888;
+    font-size: 0.8em;
+  }
+  span.ping-ball {
+    @include ping-ball(#bbb);
+    &.failed, &.failure, &.fail {
+      @include ping-ball(#d86);
+    }
+    &.successful, &.success {
+      @include ping-ball(#4d8);
+    }
+    &.partially_successful, &.pending, &.warning {
+      @include ping-ball(#bbb);
+    }
+  }
+}
+
+table.key-value-table {
+  width: 90%;
+  tr {
+    border-bottom: 1px solid #f8f8f8;
+    td, th {
+      color: #555;
+      padding: 10px 20px 10px 0;
+    }
+    th {
+      width: 30%;
+      text-indent: 20px;
+    }
+  }
+}

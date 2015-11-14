@@ -5,7 +5,12 @@ class Portal < ActiveRecord::Base
 
   validates :title, presence: true
   validates :slug,  presence: true, uniqueness: true
+  validates :user_id, presence: true
   before_validation :generate_slug, on: :create
+
+  def to_param
+    slug
+  end
 
   private
 

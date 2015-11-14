@@ -10,8 +10,25 @@ class Reply < ActiveRecord::Base
 
   serialize :headers, JSON
 
+  validates :submission_id, presence: true
+  validates :destination_id, presence: true
+
   def successful?
-    http_status_code < 400
+    http_status_code && http_status_code.to_i < 400
+  end
+
+  def failed?
+    http_status_code && http_status_code.to_i >= 400
+  end
+  alias :failure? :failed?
+
+  def pending?
+    new_record? || http_status_code.blank?
+  end
+
+  def status
+    matched = %w(pending successful failed).detect{ |key| send("#{key}?") }
+    matched ? matched.to_sym : :unknown
   end
 
   def http_status_message

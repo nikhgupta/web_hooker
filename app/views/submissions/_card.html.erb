@@ -1,0 +1,16 @@
+<div class="panel panel-<%= submission.status_style %> submissionCard" data-id="<%= submission.id %>">
+  <div class="panel-heading">
+    <div class='submission-info'>
+      <%= submission.portal.title_label %>
+      <span class='label label-warning'><%= submission.host || submission.ip %></span>
+      <%= submission.ping_balls %>
+      <%= submission.timestamp_for(:created_at) %>
+    </div>
+    <div class='submission-details'>
+      <code><%= submission.uuid %></code>
+    </div>
+  </div>
+  <div class="panel-body">
+    <%= submission.headers_list.join("<br/>").html_safe %>
+  </div>
+</div>

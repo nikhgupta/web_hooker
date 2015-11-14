@@ -1,10 +1,17 @@
-require 'rails_helper'
-
 RSpec.describe "Submissions", type: :request do
   describe "GET /submissions" do
-    it "works! (now write some real specs)" do
+    it "requires authentication" do
+      get submissions_path
+      expect(response).to have_http_status(302)
+      expect(response).to be_redirect
+    end
+
+    it "does not redirect if user is logged in" do
+      login_as create(:confirmed_user)
       get submissions_path
       expect(response).to have_http_status(200)
+      expect(response).not_to be_redirect
     end
   end
 end
+

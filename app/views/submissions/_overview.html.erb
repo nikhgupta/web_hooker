@@ -1,0 +1,45 @@
+<div class='submissionOverview overview-bg-<%= submission.status_style %>' id='submissionOverview-<%= submission.id %>'>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><%= link_to "Overview", "#overview", role: "tab", aria: { controls: "home" }, data: { toggle: "tab" } %></li>
+    <li role="presentation"><%= link_to "Headers", "#headers", role: "tab", aria: { controls: "home" }, data: { toggle: "tab" } %></li>
+    <li role="presentation"><%= link_to "Payload", "#payload", role: "tab", aria: { controls: "home" }, data: { toggle: "tab" } %></li>
+    <li role="presentation"><%= link_to "Replies", "#replies", role: "tab", aria: { controls: "home" }, data: { toggle: "tab" } %></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="overview">
+      <table class='key-value-table'>
+        <tr><th>UUID</th><td><%= submission.uuid %></td></tr>
+        <tr><th>Status</th><td><%= submission.status.to_s.titleize %></td></tr>
+        <tr><th>Matched Rule</th><td><%= submission.portal_link %></td></tr>
+        <tr><th>Request Method</th><td><%= submission.request_method %></td></tr>
+        <tr><th>Content Type</th><td><%= submission.content_type %></td></tr>
+        <tr><th>Accepts</th><td><%= submission.accept_type %></td></tr>
+        <tr><th>Request Size</th><td><%= submission.size %></td></tr>
+        <tr><th>Received at</th><td><%= submission.received_at %></td></tr>
+      </table>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="headers">
+      <table class='key-value-table'>
+        <% submission.headers.each do |key, val| %>
+          <tr><th><%= key %></th><td><%= val %></td></tr>
+        <% end %>
+      </table>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="payload">
+      <code>
+        <%= submission.headers_list.join("<br/>").html_safe %>
+        <br/><br/>
+        <%= submission.body %>
+      </code>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="replies">
+      <% submission.replies_including_awaited.each do |reply| %>
+        <%= render partial: "replies/card", locals: { reply: reply.decorate } %>
+      <% end %>
+    </div>
+  </div>
+<div>

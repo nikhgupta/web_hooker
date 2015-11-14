@@ -2,7 +2,7 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
 
   root to: 'high_voltage/pages#show', id: 'home'
-  match 'for/:portal' => 'submissions#process', as: :processor, via: :all
+  match 'for/:id' => 'portals#route', as: :portal_router, via: :all
 
   devise_for :users
   authenticate :user, lambda(&:admin?) do

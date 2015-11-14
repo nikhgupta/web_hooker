@@ -14,6 +14,7 @@ class CreateSubmissions < ActiveRecord::Migration
       t.integer :successful_replies_count, default: 0
 
       t.text :headers
+      t.text :payload
       t.text :body
 
       t.timestamps null: false

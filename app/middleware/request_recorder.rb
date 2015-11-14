@@ -1,3 +1,6 @@
+# Look inside:
+# https://github.com/rails/rails/blob/master/actionpack/test/dispatch/request_test.rb
+#
 class RequestRecorder
   def initialize(app, options = {})
     @app = app
@@ -24,21 +27,30 @@ class RequestRecorder
   end
 
   def create_submission_request_via(portal)
-    @request = Rack::Request.new(@env)
+    @request = ActionDispatch::Request.new(@env)
     portal.submissions.create(
-      ip: sender_ip,
       host: @env['HTTP_HOST'],
-      uuid: @env['action_dispatch.request_id'] || SecureRandom.uuid,
+      ip: @request.remote_ip,
+      uuid: @request.uuid || SecureRandom.uuid,
       headers: @request.incoming_headers(:http, :content),
-      body: @request.body.string,
+      body: request_body, payload: payload,
       request_method: @request.request_method.to_s.underscore,
-      content_type: @request.content_type,
+      content_type: @request.content_type || @request.media_type,
       content_length: @request.content_length.to_i
     )
   end
 
-  def sender_ip
-    @env['HTTP_X_REAL_IP'] || @env['HTTP_FORWARDED_FOR'] || @env['HTTP_HOST']
+  def request_body
+    @request.env['rack.input'].try(:string) || @request.body.try(:string)
   end
+
+  # TODO: Ensure that this does not raise errors.
+  def payload
+    Rack::Utils.parse_nested_query @request.env['QUERY_STRING'].to_s.strip
+  end
+
+  # def sender_ip
+  #   @env['HTTP_X_REAL_IP'] || @env['HTTP_X_FORWARDED_FOR'] || @env['HTTP_HOST']
+  # end
 end
 

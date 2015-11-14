@@ -13,7 +13,7 @@ class RequestForwardingJob < ActiveJob::Base
   def measure_time_for(&block)
     start = Time.now
     yield
-    @time_taken = Time.now - start
+    @time_taken = (Time.now - start)*1000
   end
 
   def forward_request

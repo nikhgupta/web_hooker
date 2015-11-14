@@ -24,11 +24,11 @@ RSpec.describe DestinationsController, type: :controller do
   # Destination. As you add validations to Destination, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    build(:destination).attributes
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    build(:destination).attributes.merge("url" => "   ")
   }
 
   # This should return the minimal set of values that should be in the session
@@ -103,14 +103,14 @@ RSpec.describe DestinationsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        build(:destination).attributes.merge("url" => "http://newurl.com")
       }
 
       it "updates the requested destination" do
         destination = Destination.create! valid_attributes
         put :update, {:id => destination.to_param, :destination => new_attributes}, valid_session
         destination.reload
-        skip("Add assertions for updated state")
+        expect(destination.url).to eq "http://newurl.com"
       end
 
       it "assigns the requested destination as @destination" do

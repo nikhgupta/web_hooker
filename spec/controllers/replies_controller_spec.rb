@@ -24,11 +24,11 @@ RSpec.describe RepliesController, type: :controller do
   # Reply. As you add validations to Reply, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    build(:reply).attributes
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    build(:reply).attributes.merge("submission_id" => nil)
   }
 
   # This should return the minimal set of values that should be in the session
@@ -103,14 +103,14 @@ RSpec.describe RepliesController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        build(:reply).attributes.merge("http_status_code" => 400)
       }
 
       it "updates the requested reply" do
         reply = Reply.create! valid_attributes
         put :update, {:id => reply.to_param, :reply => new_attributes}, valid_session
         reply.reload
-        skip("Add assertions for updated state")
+        expect(reply.http_status_message).to eq "Bad Request"
       end
 
       it "assigns the requested reply as @reply" do

@@ -1,7 +1,14 @@
 module IntegrationHelpers
+  def test_server
+    "#{Capybara.server_host}:#{Capybara.server_port}"
+  end
+
+  def devel_server
+    "#{ENV['DEVEL_SERVER_HOST']}:#{ENV['DEVEL_SERVER_PORT']}"
+  end
   def show_page
     save_page Rails.root.join('public', 'capybara.html')
-    %x(launchy http://localhost:5000/capybara.html)
+    %x(launchy http://#{devel_server}/capybara.html)
   end
 
   def login_as(user, password = "password")

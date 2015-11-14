@@ -1,0 +1,31 @@
+<!--
+<pre><code><%= reply.headers.map{|k,v| "#{k.titleize.gsub(/\s+/, '-')}: #{v}" }.join("\n") if reply.headers.present? %>
+
+<%= reply.body %></code></pre>
+-->
+
+<div class="panel panel-<%= reply.status_style %> replyCard" data-id="<%= reply.id %>">
+
+  <div class="panel-heading" data-toggle="collapse"
+    data-parent="#submissionOverview-<%= reply.submission.id %>"
+    data-target=".replyCard[data-id='<%= reply.id %>'] .panel-body">
+    <%= reply.destination.url %>
+  </div>
+
+  <div class="panel-body collapse out">
+    <%= reply.headers_with_body.join("<br/>").html_safe %>
+  </div>
+
+  <div class="panel-footer" data-toggle="collapse"
+    data-parent="#submissionOverview-<%= reply.submission.id %>"
+    data-target=".replyCard[data-id='<%= reply.id %>'] .panel-body">
+
+    Received <%= reply.content_length %> in <%= reply.response_time %>ms
+    <%= reply.label_for :http_status_message, class: "pull-right" %>
+    <%= reply.label_for :content_type, style: :info, class: "pull-right" %>
+    <%= reply.missing_label_for :body, style: :warning, class: "pull-right" %>
+    <%= reply.missing_label_for :headers, style: :danger, class: "pull-right" %>
+  </div>
+
+</div>
+

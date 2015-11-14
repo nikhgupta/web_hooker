@@ -1,39 +1,23 @@
 require "rails_helper"
 
 RSpec.describe PortalsController, type: :routing do
-  describe "routing" do
+  include_context "routing specs - stubbed devise authentication - verify rest routes"
 
-    it "routes to #index" do
-      expect(:get => "/portals").to route_to("portals#index")
+  context "custom routing" do
+    let(:portal) { create :portal }
+    let(:path) { "/for/#{portal.to_param}"}
+
+    context "with authenticated user" do
+      let(:authenticated?) { true }
+      it "routes all known HTTP methods to #route from /for/:portal" do
+        routes_all_known_http_methods_to? "portals#route", id: portal.slug
+      end
     end
-
-    it "routes to #new" do
-      expect(:get => "/portals/new").to route_to("portals#new")
+    context "with unauthenticated user" do
+      let(:authenticated?) { false }
+      it "routes all known HTTP methods to #route from /for/:portal" do
+        routes_all_known_http_methods_to? "portals#route", id: portal.slug
+      end
     end
-
-    it "routes to #show" do
-      expect(:get => "/portals/1").to route_to("portals#show", :id => "1")
-    end
-
-    it "routes to #edit" do
-      expect(:get => "/portals/1/edit").to route_to("portals#edit", :id => "1")
-    end
-
-    it "routes to #create" do
-      expect(:post => "/portals").to route_to("portals#create")
-    end
-
-    it "routes to #update via PUT" do
-      expect(:put => "/portals/1").to route_to("portals#update", :id => "1")
-    end
-
-    it "routes to #update via PATCH" do
-      expect(:patch => "/portals/1").to route_to("portals#update", :id => "1")
-    end
-
-    it "routes to #destroy" do
-      expect(:delete => "/portals/1").to route_to("portals#destroy", :id => "1")
-    end
-
   end
 end
