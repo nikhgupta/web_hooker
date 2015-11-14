@@ -14,7 +14,6 @@ gem 'cocoon'
 gem 'draper'
 gem 'high_voltage'
 gem 'bootstrap-generators'
-gem 'font-awesome-rails'
 
 gem 'sidekiq'
 gem 'sinatra', require: false
@@ -23,6 +22,13 @@ gem 'devise'
 gem 'httparty'
 
 gem 'foreman'
+gem 'font-awesome-rails'
+
+source "https://rails-assets.org" do
+  gem 'rails-assets-moment'
+  gem 'rails-assets-livestampjs'
+  gem 'rails-assets-fontawesome'
+end
 
 group :development, :test do
   gem 'byebug'

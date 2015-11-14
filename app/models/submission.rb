@@ -30,4 +30,12 @@ class Submission < ActiveRecord::Base
   # def partially_successful?
   #   status == :partially_successful
   # end
+
+  def pending_replies_count
+    portal.destinations_count - failed_replies_count - successful_replies_count
+  end
+
+  def replies_including_awaited
+    destinations.map{|destin| Reply.for(self, destin)}
+  end
 end

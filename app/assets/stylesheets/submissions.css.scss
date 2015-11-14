@@ -1,0 +1,33 @@
+#submissionBox {
+  @extend .row;
+
+  #submissionList {
+    @extend .col-sm-4;
+    padding: 0;
+    border-right: 1px solid #efefef;
+    background-color: #fcfcfc;
+    .panel {
+      margin-bottom: 5px;
+      border-radius: 0;
+      .panel-heading {
+        border-radius: 0;
+        span.ping-ball {
+          float: right;
+          margin: 2px;
+        }
+        span.timestamp {
+          float: right;
+          margin-right: 15px;
+        }
+        .submission-details {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+
+  #submissionOverview {
+    @extend .col-sm-8;
+    padding-top: 10px;
+  }
+}

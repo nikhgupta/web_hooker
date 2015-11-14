@@ -1,1 +1,17 @@
-<h1><%= submission.uuid %></h1>
+<div class="panel panel-<%= submission.status_style %> submissionCard" data-id="<%= submission.id %>">
+  <div class="panel-heading">
+    <div class='submission-info'>
+      <%= submission.portal.title_label %>
+      <%= submission.ping_balls %>
+      <%= submission.timestamp_for(:created_at) %>
+    </div>
+    <div class='submission-details'>
+      <code><%= submission.uuid %></code>
+    </div>
+  </div>
+  <div class="panel-body">
+    <code>
+      <%= submission.headers.map{|k,v| "#{k} => #{v}"}.join("<br/>").html_safe %>
+    </code>
+  </div>
+</div>

@@ -1,10 +1,11 @@
 <div id="submissionBox">
   <div id="submissionList">
     <% @submissions.each do |submission| %>
-      <%= render partial: "card", locals: { submission: submission} %>
+      <%= render partial: "card", locals: { submission: submission.decorate } %>
     <% end %>
   </div>
 
   <div id="submissionOverview">
+    <%= render partial: "overview", locals: { submission: @submissions.first.decorate } %>
   </div>
 </div>

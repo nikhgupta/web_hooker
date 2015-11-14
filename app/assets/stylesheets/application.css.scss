@@ -10,7 +10,39 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require font-awesome
- *= require_tree .
+ *= require fontawesome
  *= require_self
  */
+
+@import 'bootstrap-generators';
+@import 'submissions';
+
+@mixin ping-ball($color) {
+  width: 10px;
+  height: 10px;
+  background-color: $color;
+  border: 1px solid darken($color, 10%);
+  box-shadow: 1px 1px 1px rgba($color, 0.3);
+}
+
+body {
+  padding-top: 50px;
+  font-family: 'Open Sans', sans-serif;
+  span.timestamp {
+    color: #888;
+    font-size: 0.8em;
+  }
+  span.ping-ball {
+    @include ping-ball(#bbb);
+    &.failed, &.failure, &.fail {
+      @include ping-ball(#d92);
+    }
+    &.successful, &.success {
+      @include ping-ball(#4d8);
+    }
+    &.partially_successful, &.pending, &.warning {
+      @include ping-ball(#984);
+    }
+  }
+}
+

@@ -14,4 +14,15 @@
 #= require jquery_ujs
 #= require turbolinks
 #= require bootstrap
+#= require moment
+#= require livestampjs/livestamp
 #= require_tree .
+
+jQuery ->
+
+  # animates timestamps using Livestamp.js
+  $(".timestamp").each ->
+    $(@).on 'change.livestamp', (event, from, to) ->
+      event.preventDefault()
+      $(@).fadeOut => $(@).html(to).fadeIn()
+    .livestamp $(@).data('timestamp')

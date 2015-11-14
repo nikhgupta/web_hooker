@@ -1,13 +1,21 @@
-class SubmissionDecorator < Draper::Decorator
-  delegate_all
+class SubmissionDecorator < ApplicationDecorator
+  decorates_association :portal
 
-  # Define presentation-specific methods here. Helpers are accessed through
-  # `helpers` (aka `h`). You can override attributes, for example:
-  #
-  #   def created_at
-  #     helpers.content_tag :span, class: 'time' do
-  #       object.created_at.strftime("%a %m/%d/%y")
-  #     end
-  #   end
+  def status_style
+    case model.status
+    when :failure then :danger
+    when :successful then :success
+    when :pending, :partially_successful then :warning
+    else :info
+    end
+  end
 
+  def ping_balls
+    %w(pending successful failed).map do |status|
+      count = model.send("#{status}_replies_count")
+      count.times.map do
+        h.content_tag(:span, nil, class: "ping-ball #{status}")
+      end
+    end.flatten.join("").html_safe
+  end
 end
