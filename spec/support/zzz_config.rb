@@ -4,6 +4,7 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include ActiveJob::TestHelper, type: :job
   config.include IntegrationHelpers, type: :feature
+  config.include Warden::Test::Helpers, type: :request
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
@@ -19,6 +20,12 @@ RSpec.configure do |config|
     DatabaseCleaner.cleaning do
       example.run
     end
+  end
+
+  config.around(:each, type: :request) do |example|
+    Warden.test_mode!
+    example.run
+    Warden.test_reset!
   end
 end
 

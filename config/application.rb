@@ -28,5 +28,6 @@ module WebHooker
 
     # Use middleware for recording incoming requests to database
     config.middleware.use "RequestRecorder", path_prefix: /^\/for\//
+    config.middleware.insert 0, "HttpMethodNotAllowed"
   end
 end

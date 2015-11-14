@@ -39,7 +39,7 @@ RSpec.describe RequestRecorder do
     code, env = subject.call mock_env_for(input: "ping=pong", stub: {
       "HTTP_HOST" => "SomeHost.com",
       "action_dispatch.request_id" => "SOME-UUID",
-      "HTTP_FORWARDED_FOR" => "123.123.123.123",
+      "HTTP_X_FORWARDED_FOR" => "123.123.123.123",
       "CONTENT_LENGTH" => "20",
       "CONTENT_TYPE" => "application/json",
       "SERVER_RANDOM" => "random"
@@ -55,7 +55,7 @@ RSpec.describe RequestRecorder do
     expect(submission.ip).to eq "123.123.123.123"
     expect(submission.headers).to eq({
       "Host" => "SomeHost.com",
-      "Forwarded-For" => "123.123.123.123",
+      "X-Forwarded-For" => "123.123.123.123",
       "Content-Length" => "20",
       "Content-Type" => "application/json"
     })

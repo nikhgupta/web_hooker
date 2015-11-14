@@ -3,7 +3,10 @@ ENV['RAILS_ENV'] ||= 'test'
 # simplecov configuration
 unless ENV['COVERAGE'].to_s.strip.empty?
   require 'simplecov'
-  SimpleCov.start 'rails'
+  SimpleCov.start 'rails' do
+    add_group 'Jobs', '/app/jobs'
+    add_group 'Middleware', '/app/middleware'
+  end
   SimpleCov.command_name 'RSpec'
   puts "required simplecov.."
 end

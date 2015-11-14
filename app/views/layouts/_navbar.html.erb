@@ -12,6 +12,7 @@
     <div id="navbar" class="collapse navbar-collapse">
       <ul class='nav navbar-nav'>
         <%= navbar_link "Home", root_path %>
+        <%= navbar_link "Submissions", submissions_path %>
         <%= navbar_link "Monitor", monitor_path, target: "_blank" if current_user.try(:admin?) %>
       </ul>
       <ul class='nav navbar-nav navbar-right'>

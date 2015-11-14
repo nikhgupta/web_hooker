@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20151112211612) do
     t.integer  "failed_replies_count",     default: 0
     t.integer  "successful_replies_count", default: 0
     t.text     "headers"
+    t.text     "payload"
     t.text     "body"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false

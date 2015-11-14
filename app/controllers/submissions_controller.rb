@@ -1,5 +1,6 @@
 class SubmissionsController < ApplicationController
   before_action :set_submission, only: [:show, :edit, :update, :destroy]
+  skip_before_action :verify_authenticity_token, only: :route
 
   # GET /submissions
   # GET /submissions.json
@@ -59,6 +60,17 @@ class SubmissionsController < ApplicationController
       format.html { redirect_to submissions_url, notice: 'Submission was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def route
+    sid = request.env['HTTP_X_WEBHOOKER_SUBMISSION_ID']
+    Submission.find(sid).destination_ids.each do |did|
+      RequestForwardingJob.perform_later(sid, did)
+    end
+
+    head :accepted
+  rescue ActiveRecord::RecordNotFound => e
+    head :not_found
   end
 
   private

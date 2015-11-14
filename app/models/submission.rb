@@ -8,6 +8,7 @@ class Submission < ActiveRecord::Base
   validates :request_method, presence: true
 
   serialize :headers, JSON
+  serialize :payload, JSON
 
   def pending?
     portal.destinations_count > failed_replies_count + successful_replies_count
