@@ -1,4 +1,7 @@
 class Submission < ActiveRecord::Base
+  belongs_to :account, counter_cache: true
+  validates :account_id, presence: true
+
   belongs_to :portal, counter_cache: true
   has_many :replies, dependent: :destroy
   has_many :destinations, through: :portal

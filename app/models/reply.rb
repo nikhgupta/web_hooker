@@ -1,4 +1,7 @@
 class Reply < ActiveRecord::Base
+  belongs_to :account, counter_cache: true
+  validates :account_id, presence: true
+
   belongs_to :destination
   belongs_to :submission
 

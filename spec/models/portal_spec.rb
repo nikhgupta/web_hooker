@@ -1,12 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Portal, type: :model do
-  it { is_expected.to belong_to(:user).counter_cache }
+  it { is_expected.to belong_to(:account).counter_cache }
+  it { is_expected.to validate_presence_of(:account_id) }
   it { is_expected.to have_many(:submissions).dependent(:destroy) }
   it { is_expected.to have_many(:destinations).dependent(:destroy) }
   it { is_expected.to validate_presence_of(:title) }
-  # it { is_expected.to validate_presence_of(:slug) }
-  # it { is_expected.to validate_uniqueness_of(:slug) }
 
   it "generates a random 48-char slug for the portal on creation" do
     portal = create :portal

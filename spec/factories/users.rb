@@ -1,12 +1,12 @@
 FactoryGirl.define do
   factory :user do
+    account
     sequence(:email){ |n| "user#{n}@example.com" }
     password "password"
     password_confirmation { password }
-    admin false
 
     factory :admin do
-      admin true
+      role :admin
       confirmed true
     end
 
@@ -19,7 +19,7 @@ FactoryGirl.define do
     end
 
     initialize_with do
-      User.find_or_initialize_by(email: email)
+      account.users.find_or_initialize_by(email: email)
     end
 
     after(:build) do |user, evaluator|

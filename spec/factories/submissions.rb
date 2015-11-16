@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :submission do
     portal
+    account { portal.account }
 
     host "SomeHost.com"
     ip nil

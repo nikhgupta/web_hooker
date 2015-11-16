@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-  has_many :portals, dependent: :destroy
+  belongs_to :account, counter_cache: true
+  validates :account_id, presence: true
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

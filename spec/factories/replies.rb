@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :reply do
     destination
     submission
+    account { submission.account }
 
     content_type nil
     response_time  0

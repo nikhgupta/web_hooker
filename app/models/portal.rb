@@ -1,11 +1,12 @@
 class Portal < ActiveRecord::Base
-  belongs_to :user, counter_cache: true
+  belongs_to :account, counter_cache: true
+  validates :account_id, presence: true
+
   has_many :submissions,  dependent: :destroy
   has_many :destinations, dependent: :destroy
 
   validates :title, presence: true
   validates :slug,  presence: true, uniqueness: true
-  validates :user_id, presence: true
   before_validation :generate_slug, on: :create
 
   def to_param

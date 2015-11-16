@@ -6,6 +6,8 @@ RSpec.describe Reply, type: :model do
   let(:unknown)    { create :reply, http_status_code: nil }
   let(:new_record) { build  :reply }
 
+  it { is_expected.to belong_to(:account).counter_cache }
+  it { is_expected.to validate_presence_of(:account_id) }
   it { is_expected.to belong_to :submission }
   it { is_expected.to belong_to :destination }
 

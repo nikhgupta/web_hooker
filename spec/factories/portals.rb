@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :portal do
-    user
+    account
     title "Some Portal"
     destinations_count 0
   end

@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Submission, type: :model do
+  it { is_expected.to belong_to(:account).counter_cache }
+  it { is_expected.to validate_presence_of(:account_id) }
   it { is_expected.to belong_to(:portal).counter_cache }
   it { is_expected.to have_many(:replies).dependent(:destroy) }
   it { is_expected.to have_many(:destinations).through(:portal) }
