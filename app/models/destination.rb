@@ -1,4 +1,6 @@
 class Destination < ActiveRecord::Base
+  acts_as_tenant :account
+
   belongs_to :account, counter_cache: true
   validates :account_id, presence: true
 

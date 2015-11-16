@@ -4,8 +4,13 @@
   <%= devise_error_messages! %>
 
   <div class="field">
+    <%= f.label :account %><br />
+    <%= f.text_field :account, autofocus: true %>.lvh.me:12000
+  </div>
+
+  <div class="field">
     <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+    <%= f.email_field :email, autofocus: false %>
   </div>
 
   <div class="field">

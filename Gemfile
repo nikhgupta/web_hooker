@@ -20,6 +20,7 @@ gem 'sinatra', require: false
 
 gem 'devise'
 gem 'httparty'
+gem 'acts_as_tenant'
 
 gem 'foreman'
 gem 'font-awesome-rails'

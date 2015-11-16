@@ -1,42 +1,83 @@
 RSpec.feature "User authentication", type: :feature do
 
-  scenario "user should be able to register" do
-    visit root_path
-    click_link 'Register'
-    fill_in "Email", with: "newuser@example.com"
-    fill_in "Password", with: "password", exact: true
-    fill_in "Password confirmation", with: "password"
-    click_button "Sign up"
+  # let(:account){ create :account, subdomain: "test" }
+  # before(:each){ ActsAsTenant.current_tenant = account }
+  # after(:each){ ActsAsTenant.current_tenant = nil }
 
-    expect(page).to have_content "activate your account"
-    expect(User.find_by(email: "newuser@example.com")).to be_persisted
+  context "registration" do
+    scenario "user should be able to register" do
+      visit root_url
+      click_link 'Register'
+      fill_in "Account", with: "test"
+      fill_in "Email", with: "newuser@example.com"
+      fill_in "Password", with: "password", exact: true
+      fill_in "Password confirmation", with: "password"
+      click_button "Sign up"
+
+      expect(page).to have_content "activate your account"
+      expect(page.current_url).to eq new_user_session_url(subdomain: "test")
+      user = User.find_by(email: "newuser@example.com")
+      expect(user).to be_persisted
+      expect(user.account).to be_persisted
+      expect(user.account.subdomain).to eq "test"
+    end
   end
 
-  scenario "user should be able to log in" do
-    user = create(:confirmed_user)
+  context "login" do
+    scenario "user should be able to log in through main site and redirected properly" do
+      user = create(:confirmed_user)
 
-    visit root_path
-    click_link 'Log in'
-    fill_in "Email", with: user.email
-    fill_in "Password", with: "password"
-    click_button "Log in"
+      visit root_url
+      click_link 'Log in'
+      fill_in "Email", with: user.email
+      fill_in "Password", with: "password"
+      click_button "Log in"
 
-    expect(page).to have_link "Profile"
-    expect(page.current_path).to eq root_path
-    expect(page).to have_content "Signed in successfully"
+      expect(page).to have_link "Profile"
+      expect(page.current_url).to eq root_url(subdomain: "test")
+      expect(page).to have_content "Signed in successfully"
+    end
+    scenario "user should be able to log in through his subdomain" do
+      user = create(:confirmed_user)
+
+      visit root_url(subdomain: "test")
+      click_link 'Log in'
+      fill_in "Email", with: user.email
+      fill_in "Password", with: "password"
+      click_button "Log in"
+
+      expect(page).to have_link "Profile"
+      expect(page.current_url).to eq root_url(subdomain: "test")
+      expect(page).to have_content "Signed in successfully"
+    end
+    scenario "user should not be able to log in through another subdomain" do
+      user = create(:confirmed_user)
+
+      visit root_url(subdomain: "another")
+      click_link 'Log in'
+      fill_in "Email", with: user.email
+      fill_in "Password", with: "password"
+      click_button "Log in"
+
+      expect(page).not_to have_link "Profile"
+      expect(page.current_url).to eq new_user_session_url(subdomain: "another")
+      expect(page).not_to have_content "Signed in successfully"
+    end
+    scenario "user logins with wrong credentials" do
+      user = create(:confirmed_user)
+
+      visit root_url
+      click_link 'Log in'
+      fill_in "Email", with: user.email
+      fill_in "Password", with: "wrongpassword"
+      click_button "Log in"
+
+      expect(page).to have_content "Invalid email or password"
+      expect(page.current_url).to eq new_user_session_url
+    end
   end
 
-  scenario "user logins with wrong credentials" do
-    user = create(:confirmed_user)
-
-    visit root_path
-    click_link 'Log in'
-    fill_in "Email", with: user.email
-    fill_in "Password", with: "wrongpassword"
-    click_button "Log in"
-
-    expect(page).to have_content "Invalid email or password"
-    expect(page.current_path).to eq new_user_session_path
+  context "logout" do
   end
 
   context "when user is logged in" do
