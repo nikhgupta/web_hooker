@@ -8,7 +8,9 @@ users = [
     user.admin = data.fetch(:admin, false)
     user.skip_confirmation!
     user.password = user.password_confirmation = "password"
-  end.save
+    user.save
+    user
+  end
 end
 
 portal = users[0].portals.find_or_create_by(title: "Test Portal")
