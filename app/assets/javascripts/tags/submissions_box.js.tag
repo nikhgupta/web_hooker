@@ -1,13 +1,7 @@
 <submissions-box>
-  <submissions-list submissions={submissions}></submissions-list>
-  <submission-overview submission="{ submission }"></submission-overview>
+  <div riot-tag="submissions-list" submissions={submissions}></div>
+  <div riot-tag="submission-overview" submission="{ submission }"></div>
 
-  <style>
-
-  </style>
-
-  <script>
-    this.submissions = opts.submissions
-    this.submission  = this.submissions[0]
-  </script>
+  this.submissions = opts.submissions
+  this.submission  = this.submissions[0]
 </submissions-box>

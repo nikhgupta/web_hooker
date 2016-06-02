@@ -1,11 +1,8 @@
 class PortalSerializer < ActiveModel::Serializer
+  attributes :id, :title, :slug
+  attributes :submissions_count, :destinations_count
+  attributes :created_at
+
+  belongs_to :user
   has_many :submissions
-  def type
-    case object.status
-    when :failure then :danger
-    when :successful then :success
-    when :pending, :partially_successful then :warning
-    else :info
-    end
-  end
 end

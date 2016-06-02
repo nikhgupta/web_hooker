@@ -36,8 +36,6 @@ end
 
 group :development, :test do
   gem 'byebug'
-  gem 'web-console', '~> 2.0'
-  gem 'spring'
 
   gem 'pry-rails'
   gem 'dotenv-rails'
@@ -55,10 +53,12 @@ group :test do
 end
 
 group :development do
+  gem 'spring'
   gem 'guard-rspec'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'terminal-notifier'
+  gem 'web-console', '~> 2.0'
   gem 'terminal-notifier-guard'
   gem 'spring-commands-rspec'
 end

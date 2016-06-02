@@ -1,7 +1,5 @@
 <submissions-list>
-  <submission-card each={submission in submissions} submission="{submission}"></submission-card>
+  <div riot-tag="submission-card" each={submission in submissions} submission="{submission}"></div>
 
-  <script>
-    this.submissions = opts.submissions
-  </script>
+  this.submissions = opts.submissions
 </submissions-list>

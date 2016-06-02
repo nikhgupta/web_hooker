@@ -1,16 +1,16 @@
 class SubmissionSerializer < ActiveModel::Serializer
-  attributes :id, :uuid, :type, :headers
+  attributes :id, :uuid, :host, :ip
+  attributes :request_method, :content_type, :content_length
+  attributes :failed_replies_count, :successful_replies_count, :pending_replies_count
+  attributes :created_at, :timestamp, :timestamp_in_words
+  attributes :type, :payload, :body, :headers
 
-  has_one  :portal
   has_many :replies
 
-  def type
-    case object.status
-    when :failure then :danger
-    when :successful then :success
-    when :pending, :partially_successful then :warning
-    else :info
-    end
+  belongs_to :portal
+
+  def replies
+    object.replies_including_awaited
   end
 
   def timestamp
@@ -26,5 +26,14 @@ class SubmissionSerializer < ActiveModel::Serializer
     t << "#{h.delete("Version")} #{h.delete("Host")}"
     h.each{ |key, val| t << "#{key}: #{val}" }
     t
+  end
+
+  def type
+    case object.status
+    when :failure then :danger
+    when :successful then :success
+    when :pending, :partially_successful then :warning
+    else :info
+    end
   end
 end

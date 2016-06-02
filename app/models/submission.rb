@@ -38,4 +38,8 @@ class Submission < ActiveRecord::Base
   def replies_including_awaited
     destinations.map{|destin| Reply.for(self, destin)}
   end
+
+  def parsed_body
+    mime = Mime::Type.lookup(object.headers["Content-Type"])
+  end
 end

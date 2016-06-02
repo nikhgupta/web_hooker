@@ -1,43 +1,43 @@
-#submissionBox {
+div[riot-tag="submissions-box"] {
   @extend .row;
-
-  #submissionList {
+  div[riot-tag="submission-overview"] {
+    @extend .col-sm-8;
+    @include independent-scroll;
+    right: 0;
+    padding-top: 10px;
+    background-color: #ffe0e0;
+  }
+  div[riot-tag='submissions-list'] {
     @extend .col-sm-4;
     @include independent-scroll;
     left: 0;
     padding: 0;
     border-right: 1px solid #efefef;
     background-color: #fcfcfc;
-    .panel {
-      margin-bottom: 10px;
-      border-radius: 0;
-      .panel-heading {
+    div[riot-tag="submission-card"] {
+      .panel {
+        margin-bottom: 10px;
         border-radius: 0;
-        span.ping-ball {
-          float: right;
-          margin: 2px;
+        .panel-heading {
+          border-radius: 0;
+          span.ping-ball {
+            float: right;
+            margin: 2px;
+          }
+          span.timestamp {
+            float: right;
+            margin-right: 15px;
+          }
+          .submission-details {
+            margin-top: 10px;
+          }
         }
-        span.timestamp {
-          float: right;
-          margin-right: 15px;
+        .panel-body {
+          display: none;
+          background-color: #f9f2f4;
+          code { padding: 0 }
         }
-        .submission-details {
-          margin-top: 10px;
-        }
-      }
-      .panel-body {
-        display: none;
-        background-color: #f9f2f4;
-        code { padding: 0 }
       }
     }
-  }
-
-  #submissionOverview {
-    @extend .col-sm-8;
-    @include independent-scroll;
-    right: 0;
-    padding-top: 10px;
-    background-color: #ffe0e0;
   }
 }

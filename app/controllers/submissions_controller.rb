@@ -6,8 +6,8 @@ class SubmissionsController < ApplicationController
   # GET /submissions
   # GET /submissions.json
   def index
-    scope = current_user.submissions.order(created_at: :desc)
-    @submissions = paginate(scope)
+    scope = current_user.submissions.includes(:portal)
+    @submissions = paginate scope.order(created_at: :desc)
     respond_to do |format|
       format.html
       format.json { render json: @submissions }
@@ -17,6 +17,10 @@ class SubmissionsController < ApplicationController
   # GET /submissions/1
   # GET /submissions/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.json { render json: @submission }
+    end
   end
 
   # GET /submissions/new
@@ -82,7 +86,9 @@ class SubmissionsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_submission
-      @submission = Submission.find(params[:id])
+      scope = current_user.submissions
+      scope = scope.includes(:portal, :replies, :destinations)
+      @submission = scope.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
