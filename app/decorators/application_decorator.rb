@@ -1,5 +1,13 @@
+class Draper::CollectionDecorator
+  include ActiveModel::SerializerSupport
+
+  delegate :current_page, :total_pages, :limit_value, :entry_name, :next_page, :prev_page,
+    :total_count, :offset_value, :out_of_range?, :last_page?
+end
+
 class ApplicationDecorator < Draper::Decorator
   delegate_all
+  include ActiveModel::SerializerSupport
 
   def label_for(attribute, options = {})
     h.content_tag(

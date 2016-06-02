@@ -2,12 +2,6 @@ class SubmissionDecorator < ApplicationDecorator
   decorates_association :portal
 
   def status_style
-    case model.status
-    when :failure then :danger
-    when :successful then :success
-    when :pending, :partially_successful then :warning
-    else :info
-    end
   end
 
   def ping_balls

@@ -1,11 +1,17 @@
 class SubmissionsController < ApplicationController
-  before_action :set_submission, only: [:show, :edit, :update, :destroy]
+  set_pagination_headers :submissions, only: [:index]
   skip_before_action :verify_authenticity_token, only: :route
+  before_action :set_submission, only: [:show, :edit, :update, :destroy]
 
   # GET /submissions
   # GET /submissions.json
   def index
-    @submissions = Submission.all.order(created_at: :desc)
+    scope = current_user.submissions.order(created_at: :desc)
+    @submissions = paginate(scope)
+    respond_to do |format|
+      format.html
+      format.json { render json: @submissions }
+    end
   end
 
   # GET /submissions/1
@@ -82,5 +88,11 @@ class SubmissionsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def submission_params
       params.require(:submission).permit(:portal_id, :host, :ip, :uuid, :request_method, :content_type, :content_length, :headers, :body, :successful_replies_count, :failed_replies_count)
+    end
+
+    def paginate(scope, options = {})
+      per_page = params[:per_page] || options[:per_page]
+      per_page = Kaminari.config.default_per_page if per_page.to_i == 0
+      scope.page(params[:page]).per(per_page.to_i)
     end
 end

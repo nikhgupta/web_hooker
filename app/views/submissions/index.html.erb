@@ -1,10 +1,1 @@
-<div id="submissionBox">
-  <div id="submissionList">
-    <% @submissions.each do |submission| %>
-      <%= render partial: "card", locals: { submission: submission.decorate } %>
-    <% end %>
-  </div>
-
-  <div id="submissionOverview">
-  </div>
-</div>
+<%= riot_component :div, :submissions_box, submissions: @submissions %>

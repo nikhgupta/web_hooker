@@ -24,6 +24,10 @@ gem 'httparty'
 gem 'foreman'
 gem 'font-awesome-rails'
 
+gem 'kaminari'
+gem 'riot_js-rails'
+gem 'active_model_serializers'
+
 source "https://rails-assets.org" do
   gem 'rails-assets-moment'
   gem 'rails-assets-livestampjs'
