@@ -4,17 +4,26 @@ class PortalsController < ApplicationController
   # GET /portals
   # GET /portals.json
   def index
-    @portals = Portal.all
+    scope = current_user.portals.includes(:destinations)
+    @portals = scope.all
+    respond_to do |format|
+      format.html
+      format.json { render json: @portals }
+    end
   end
 
   # GET /portals/1
   # GET /portals/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.json { render json: @portal }
+    end
   end
 
   # GET /portals/new
   def new
-    @portal = Portal.new
+    @portal = current_user.portals.build
   end
 
   # GET /portals/1/edit
@@ -24,7 +33,7 @@ class PortalsController < ApplicationController
   # POST /portals
   # POST /portals.json
   def create
-    @portal = Portal.new(portal_params)
+    @portal = current_user.portals.new(portal_params)
 
     respond_to do |format|
       if @portal.save
@@ -64,7 +73,7 @@ class PortalsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_portal
-      @portal = Portal.find(params[:id])
+      @portal = current_user.portals.includes(:destinations).find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

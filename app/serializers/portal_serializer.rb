@@ -4,5 +4,6 @@ class PortalSerializer < ActiveModel::Serializer
   attributes :created_at
 
   belongs_to :user
-  has_many :submissions
+  # has_many :submissions
+  has_many :destinations
 end

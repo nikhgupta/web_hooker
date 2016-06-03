@@ -1,2 +1,0 @@
-class DestinationDecorator < ApplicationDecorator
-end

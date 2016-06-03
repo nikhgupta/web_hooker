@@ -4,62 +4,71 @@ class DestinationsController < ApplicationController
   # GET /destinations
   # GET /destinations.json
   def index
-    @destinations = Destination.all
+    scope = current_user.destinations.includes(:portal)
+    @destinations = scope.all
+    respond_to do |format|
+      format.html
+      format.json { render json: @destinations }
+    end
   end
 
   # GET /destinations/1
   # GET /destinations/1.json
-  def show
-  end
+  # def show
+  #   respond_to do |format|
+  #     format.html
+  #     format.json { render json: @destination }
+  #   end
+  # end
 
   # GET /destinations/new
-  def new
-    @destination = Destination.new
-  end
+  # def new
+  #   @destination = Destination.new
+  # end
 
   # GET /destinations/1/edit
-  def edit
-  end
+  # def edit
+  # end
 
   # POST /destinations
   # POST /destinations.json
-  def create
-    @destination = Destination.new(destination_params)
+  # def create
+  #   @destination = Destination.new(destination_params)
 
-    respond_to do |format|
-      if @destination.save
-        format.html { redirect_to @destination, notice: 'Destination was successfully created.' }
-        format.json { render :show, status: :created, location: @destination }
-      else
-        format.html { render :new }
-        format.json { render json: @destination.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #   respond_to do |format|
+  #     if @destination.save
+  #       format.html { redirect_to @destination, notice: 'Destination was successfully created.' }
+  #       format.json { render :show, status: :created, location: @destination }
+  #     else
+  #       format.html { render :new }
+  #       format.json { render json: @destination.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
-  # PATCH/PUT /destinations/1
-  # PATCH/PUT /destinations/1.json
-  def update
-    respond_to do |format|
-      if @destination.update(destination_params)
-        format.html { redirect_to @destination, notice: 'Destination was successfully updated.' }
-        format.json { render :show, status: :ok, location: @destination }
-      else
-        format.html { render :edit }
-        format.json { render json: @destination.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  # # PATCH/PUT /destinations/1
+  # # PATCH/PUT /destinations/1.json
+  # def update
+  #   respond_to do |format|
+  #     if @destination.update(destination_params)
+  #       format.html { redirect_to @destination, notice: 'Destination was successfully updated.' }
+  #       format.json { render :show, status: :ok, location: @destination }
+  #     else
+  #       format.html { render :edit }
+  #       format.json { render json: @destination.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # DELETE /destinations/1
   # DELETE /destinations/1.json
-  def destroy
-    @destination.destroy
-    respond_to do |format|
-      format.html { redirect_to destinations_url, notice: 'Destination was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
+  # def destroy
+  #   @destination.destroy
+  #   respond_to do |format|
+  #     format.html { redirect_to destinations_url, notice: 'Destination was successfully destroyed.' }
+  #     format.json { head :no_content }
+  #   end
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -99,6 +99,6 @@ class SubmissionsController < ApplicationController
     def paginate(scope, options = {})
       per_page = params[:per_page] || options[:per_page]
       per_page = Kaminari.config.default_per_page if per_page.to_i == 0
-      scope.page(params[:page]).per(per_page.to_i)
+      scope.page(params[:page]).per(5)
     end
 end

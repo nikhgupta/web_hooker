@@ -3,7 +3,7 @@ class SubmissionSerializer < ActiveModel::Serializer
   attributes :request_method, :content_type, :content_length
   attributes :failed_replies_count, :successful_replies_count, :pending_replies_count
   attributes :created_at, :timestamp, :timestamp_in_words
-  attributes :type, :payload, :body, :headers
+  attributes :type, :payload, :body, :headers, :headers_list
 
   has_many :replies
 
@@ -21,7 +21,7 @@ class SubmissionSerializer < ActiveModel::Serializer
     scope.time_ago_in_words(object.created_at) + " ago"
   end
 
-  def headers
+  def headers_list
     t, h = [], object.headers
     t << "#{h.delete("Version")} #{h.delete("Host")}"
     h.each{ |key, val| t << "#{key}: #{val}" }

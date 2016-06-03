@@ -17,12 +17,19 @@
   </div>
 
   <script>
+    app = this
     this.submission = opts.submission
-    this.headers = this.submission.headers.join("\n")
+    this.headers = this.submission.headers_list.join("\n")
 
     this.on('mount', function(){
       $(".panel-heading", this.root).click(function(){
-        // load the overview for this submission
+        requested = $(this).parent().data('id')
+        overview  = app.parent.parent.tags["submission-overview"]
+        if (overview.submission.id == requested) return
+
+        $.get("/submissions/"+requested+".json", function(response){
+          overview.update({ submission: response })
+        })
       })
     })
   </script>

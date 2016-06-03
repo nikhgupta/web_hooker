@@ -14,8 +14,29 @@ class Reply < ActiveRecord::Base
     http_status_code < 400
   end
 
+  def failed?
+    http_status_code && http_status_code.to_i >= 400
+  end
+  alias :failure? :failed?
+
+  def pending?
+    new_record? || http_status_code.blank?
+  end
+
+  def status
+    matched = %w(pending successful failed).detect{ |key| send("#{key}?") }
+    matched ? matched.to_sym : :unknown
+  end
+
   def http_status_message
     Rack::Utils::HTTP_STATUS_CODES[http_status_code]
+  end
+
+  def self.for(submission, destination)
+    find_or_initialize_by(
+      submission_id:  submission.id,
+      destination_id: destination.id
+    )
   end
 
   def self.for(submission, destination)

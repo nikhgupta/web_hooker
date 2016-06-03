@@ -45,3 +45,17 @@ body {
   }
 }
 
+table.key-value-table {
+  width: 90%;
+  tr {
+    border-bottom: 1px solid #f8f8f8;
+    td, th {
+      color: #555;
+      padding: 10px 20px 10px 0;
+    }
+    th {
+      width: 30%;
+      text-indent: 20px;
+    }
+  }
+}
